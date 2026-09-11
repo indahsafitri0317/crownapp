@@ -1,55 +1,49 @@
-1 
 name: Build Android APK
 
 on:
   push:
     branches:
-      - main # Jalankan otomatis setiap ada push ke branch main
-  workflow_dispatch: # Memungkinkan tombol "Run workflow" manual di GitHub Actions
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Langkah 1: Checkout/Ambil kode dari repository GitHub
-      - name: Checkout Repository
+      # 1. Checkout kode repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Langkah 2: Setup Node.js (V8 / LTS)
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'npm'
 
-      # Langkah 3: Setup Java JDK (Wajib untuk kompilasi Android/Gradle)
+      # 3. Setup Java (Diperlukan untuk Android SDK)
       - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '21'
 
-      # Langkah 4: Setup Android SDK Tools
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # Langkah 5: Install Dependensi Project (NPM)
-      - name: Install Project Dependencies
-        run: npm ci || npm install
-
-      # Langkah 6: Kompilasi & Sync Project Android (Capacitor / Cordova)
-      # --- Jika Menggunakan Capacitor ---
-      - name: Sync Capacitor & Build APK
+      # 4. Install Dependencies & Sync Capacitor
+      - name: Install Dependencies & Capacitor Sync
         run: |
+          npm ci
           npx cap sync android
+
+      # 5. Build APK Debug
+      - name: Build Android APK
+        run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      # Langkah 7: Simpan Hasil APK ke Artifact GitHub
+      # 6. Upload APK sebagai Artifact (Bisa didownload dari GitHub)
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/uses-artifact-upload@v4
         with:
-          name: crown-app-debug-apk
+          name: crownapp-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk

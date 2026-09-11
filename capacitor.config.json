@@ -1,5 +1,8 @@
-{
-  "appId": "com.crown.app",
-  "appName": "CrownAPP",
-  "webDir": "dist"
-}
+import type { CapacitorConfig } from '@capacitor/cli';
+
+const config: CapacitorConfig = {
+  appId: 'com.indobilliard.com.crown',
+  appName: 'Crown App',
+  webDir: 'dist'
+};
+

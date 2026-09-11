@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "com.crown.app"
+    namespace = "com.indobilliard.crown"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.crown.app"
+        applicationId "com.indobilliard.crown"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

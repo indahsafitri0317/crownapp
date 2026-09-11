@@ -1,4 +1,4 @@
-package com.crown.app;
+package com.indobilliard.crown;
 
 import com.getcapacitor.BridgeActivity;
 
